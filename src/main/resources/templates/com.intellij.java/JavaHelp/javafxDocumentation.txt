@@ -1,0 +1,2012 @@
+Простые задачи
+2. Напишите программу, в которой из строки отбираются  цифры. Из этих цифр формируется массив. 
+public class Main {
+    public static void main(String[] args) {
+        String s1 = "I have 3 cats, 4 dogs, and 1 turtle";
+        String[] s2_array = s1.split("\\D+");
+        for (int i = 1; i < s2_array.length; i++) {
+            System.out.println(s2_array[i]);
+        }
+    }
+
+}
+
+3. Разработайте программу, которая выводит в консоль все цифры, входящие в  натуральное число n. К примеру, если дано число 2359, то в консоль выводятся отдельно числа  2, 3, 5, 9.
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class digit {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите натуральное число: ");
+        int number = scanner.nextInt();
+        System.out.print("Цифры в числе " + number + ": ");
+        ArrayList<Integer> digits = new ArrayList<Integer>();
+        while (number != 0) {
+            int digit = number % 10;
+            digits.add(digit);
+            number /= 10;
+        }
+        for (int i = digits.size() - 1; i >= 0; i--) {
+            System.out.print(digits.get(i) + " ");
+        }
+    }
+}
+4. Написать калькулятор для строковых выражений вида "<число> <операция> <число>",
+где <число> - положительное целое число меньшее 10, записанное словами, например, "четыре",
+<арифметическая операция> - одна из операций "плюс", "минус", "умножить". Результат
+выполнения операции вернуть в виде текстового представления числа. Пример: "пять плюс
+четыре" --> "девять".
+import java.util.*;
+
+public class t4 {
+    public static void main(String[] args) {
+        HashMap<String, Integer> numbers = new HashMap<>();
+        numbers.put("ноль", 0);
+        numbers.put("один", 1);
+        numbers.put("два", 2);
+        numbers.put("три", 3);
+        numbers.put("четыре", 4);
+        numbers.put("пять", 5);
+        numbers.put("шесть", 6);
+        numbers.put("семь", 7);
+        numbers.put("восемь", 8);
+        numbers.put("девять", 9);
+        numbers.put("десять", 10);
+        HashMap<Integer, String> result = new HashMap<>();
+        result.put(0, "ноль");
+        result.put(1, "один");
+        result.put(2, "два");
+        result.put(3, "три");
+        result.put(4, "четыре");
+        result.put(5, "пять");
+        result.put(6, "шесть");
+        result.put(7, "семь");
+        result.put(8, "восемь");
+        result.put(9, "девять");
+        result.put(10, "десять");
+        result.put(11, "одиннадцать");
+        result.put(12, "двенадцать");
+        result.put(13, "тринадцать");
+        result.put(14, "четырнадцать");
+        result.put(15, "пятнадцать");
+        result.put(16, "шестнадцать");
+        result.put(17, "семнадцать");
+        result.put(18, "восемнадцать");
+        result.put(19, "девятнадцать");
+        result.put(20, "двадцать");
+        result.put(30, "тридцать");
+        result.put(40, "сорок");
+        result.put(50, "пятдесят");
+        result.put(60, "шестьдесят");
+        result.put(70, "семьдесят");
+        result.put(80, "восемьдесят");
+        result.put(90, "девяносто");
+        result.put(100, "сто");
+        Scanner in = new Scanner(System.in);
+        System.out.println("Введите выражение: ");
+        String str = in.nextLine();
+        LinkedList<String> list = new LinkedList<>(Arrays.asList(str.split(" ")));
+        list.remove("на");
+        String[] array = list.toArray(new String[list.size()]);
+        int num1 = numbers.get(array[0]);
+        int num2 = numbers.get(array[2]);
+        int res = 0;
+        if (list.contains("плюс")){
+            res = num1 + num2;
+        } else if (list.contains("минус")) {
+            res = num1 - num2;
+        } else {
+            res = num1 * num2;
+        }
+        if ((res < 20 & res >=0) || res % 10 == 0) {
+            System.out.println(result.get(res));
+        } else if (res < 0) {
+            System.out.println("минус " + result.get(-res));
+        }
+        else {
+            System.out.println(result.get(res / 10 * 10) + " " + result.get(res % 10));
+        }
+    }
+
+}
+5. Напишите программную реализацию бинарного дерева поиска.
+class zad5 {
+    int value;
+    zad5 left;
+    zad5 right;
+
+    public zad5(int value) {
+        this.value = value;
+        left = null;
+        right = null;
+    }
+}
+
+public class BinarySearchTree5 {
+    zad5 root;
+
+    public BinarySearchTree5() {
+        root = null;
+    }
+
+    public void insert(int value) {
+        if (root == null) {
+            root = new zad5(value);
+            return;
+        }
+
+        zad5 current = root;
+        while (true) {
+            if (value < current.value) {
+                if (current.left == null) {
+                    current.left = new zad5(value);
+                    return;
+                }
+                current = current.left;
+            } else {
+                if (current.right == null) {
+                    current.right = new zad5(value);
+                    return;
+                }
+                current = current.right;
+            }
+        }
+    }
+
+    public boolean search(int value) {
+        zad5 current = root;
+        while (current != null) {
+            if (value == current.value) {
+                return true;
+            } else if (value < current.value) {
+                current = current.left;
+            } else {
+                current = current.right;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        BinarySearchTree5 bst = new BinarySearchTree5();
+        bst.insert(50);
+        bst.insert(30);
+        bst.insert(70);
+        bst.insert(20);
+        bst.insert(40);
+        bst.insert(60);
+        bst.insert(80);
+
+        boolean searchResult = bst.search(100);
+        System.out.println("Search for value 40: " + searchResult);
+    }
+}
+6. Разработайте программу, которая выводит буквы английского алфавита, используя  цикл while.
+public class task6 {
+    public static void main(String[] args) {
+        char i = 'a';
+        while(i <= 'z') {
+            System.out.print(i + " ");
+            i++;
+        }
+    }
+}
+7. Напишите программу, которая будет выводить в консоль введённое слово 6 раз.
+import java.util.Scanner;
+
+public class Zad7 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите слово: ");
+        String word = scanner.nextLine();
+
+        for (int i = 0; i < 6; i++) {
+            System.out.println(word);
+        }
+    }
+}
+8. Разработать программу для вывода на экран кубов первых десяти положительных чисел.
+public class Zad8 {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 10; i++) {
+            int cube = i * i * i;
+            System.out.println("Вывод: " + i + ": " + cube);
+        }
+    }
+} 
+9. Напишите программу, которая по дате определяет день недели, на который эта дата  приходится.  
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Scanner;
+
+public class task9 {
+    public static void main(String[] args) {
+        // Создаем объект типа Scanner для чтения ввода пользователя
+        Scanner scanner = new Scanner(System.in);
+
+        // Запрашиваем у пользователя ввод даты
+        System.out.print("enter the date in the format (yyyy-mm-dd): ");
+        String dateString = scanner.nextLine();
+
+        try {
+            // Преобразуем строку с датой в объект типа Date
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = sdf.parse(dateString);
+
+            // Создаем объект типа Calendar и устанавливаем заданную дату
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
+            // Получаем номер дня недели (1 - воскресенье, 2 - понедельник, и т.д.)
+            int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+            // Определяем название дня недели
+            String dayOfWeekName;
+            switch (dayOfWeek) {
+                case Calendar.SUNDAY:
+                    dayOfWeekName = "sunday";
+                    break;
+                case Calendar.MONDAY:
+                    dayOfWeekName = "monday";
+                    break;
+                case Calendar.TUESDAY:
+                    dayOfWeekName = "TUESDAY";
+                    break;
+                case Calendar.WEDNESDAY:
+                    dayOfWeekName = "WEDNESDAY";
+                    break;
+                case Calendar.THURSDAY:
+                    dayOfWeekName = "THURSDAY";
+                    break;
+                case Calendar.FRIDAY:
+                    dayOfWeekName = "FRIDAY";
+                    break;
+                case Calendar.SATURDAY:
+                    dayOfWeekName = "SATURDAY";
+                    break;
+                default:
+                    dayOfWeekName = "wrong format";
+            }
+
+            // Выводим результат
+            System.out.println("Day of the week: " + dayOfWeekName);
+        } catch (Exception e) {
+            System.out.println("wrong format");
+        }
+
+        // Закрываем Scanner
+        scanner.close();
+    }
+}
+10. Написать класс, который при введении даты в формате ДД.ММ.ГГ (к примеру,  22.10.20) выводит номер недели. Даты начиная с 2020 по 2022 годы. К примеру, первая неделя в  2020 году: 1-5 января, вторая неделя – 6-12 января. Значит при вводе 08.01.20 вывод должен быть:  Неделя 2. 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
+import java.util.Scanner;
+
+public class task10 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите дату в формате ДД.ММ.ГГ: ");
+        String inputDate = scanner.nextLine();
+
+        int weekNumber = getWeekNumber(inputDate);
+        System.out.println("Неделя " + weekNumber);
+
+        scanner.close();
+    }
+
+    public static int getWeekNumber(String inputDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yy");
+        LocalDate date = LocalDate.parse(inputDate, formatter);
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        int weekNumber = date.get(weekFields.weekOfWeekBasedYear());
+        return weekNumber;
+    }
+}
+11. Разработайте программу, реализующую рекурсивное вычисление факториала.
+import java.util.Scanner;
+
+public class Factorial {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите число: ");
+        int number = scanner.nextInt(); // Ввод числа с клавиатуры
+        scanner.close();
+
+        long factorial = calculateFactorial(number); // Вызываем метод для вычисления факториала
+        System.out.println("Факториал числа " + number + " равен " + factorial);
+    }
+
+    public static long calculateFactorial(int n) {
+        if (n == 0) {
+            return 1; // Факториал 0 равен 1
+        } else {
+            return n * calculateFactorial(n - 1); // Рекурсивный вызов метода для уменьшения числа на 1
+        }
+    }
+}
+12. Разработать класс-оболочку для числового типа double. Реализовать статические методы сложения, деления, возведения в степень.
+
+import java.util.Scanner;
+
+public class DoubleWrapper {
+
+    private double value;
+
+    public DoubleWrapper(double value) {
+        this.value = value;
+    }
+
+    public double getValue() {
+        return this.value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    // Статический метод для сложения двух чисел типа double
+    public static double add(double a, double b) {
+        return a + b;
+    }
+
+    // Статический метод для деления двух чисел типа double
+    public static double divide(double a, double b) {
+        if (b == 0) {
+            throw new ArithmeticException("Division by zero is not allowed");
+        }
+        return a / b;
+    }
+
+    // Статический метод для возведения числа типа double в степень
+    public static double pow(double a, double b) {
+        return Math.pow(a, b);
+    }
+13. Разработать программу, которая заполняет двумерный массив случайными положительными числами в диапазоне от 1 до 100 до тех пор, пока сумма граничных элементов  не станет равной 666. Пользователь вначале вводит размер матрицы
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите размер матрицы: ");
+        int n = scanner.nextInt();
+        
+        int[][] matrix = new int[n][n];
+        Random random = new Random();
+
+        // Заполнение матрицы случайными числами
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                matrix[i][j] = random.nextInt(100) + 1;
+            }
+        }
+
+        // Поиск суммы граничных элементов
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += matrix[0][i]; // Верхняя строка
+            sum += matrix[n-1][i]; // Нижняя строка
+            if (i > 0 && i < n-1) {
+                sum += matrix[i][0]; // Левый столбец
+                sum += matrix[i][n-1]; // Правый столбец
+            }
+        }
+
+        // Пока сумма граничных элементов не станет равной 666,
+        // продолжаем заполнять матрицу случайными числами
+        while (sum != 666) {
+            int i = random.nextInt(n);
+            int j = random.nextInt(n);
+            int value = random.nextInt(100) + 1;
+            if (matrix[i][j] != value) {
+                if (i == 0 || i == n-1 || j == 0 || j == n-1) {
+                    sum -= matrix[i][j];
+                    matrix[i][j] = value;
+                    sum += value;
+                } else {
+                    matrix[i][j] = value;
+                }
+            }
+        }
+
+        // Вывод матрицы на экран
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите первое число: ");
+        double a = scanner.nextDouble();
+
+        System.out.print("Введите второе число: ");
+        double b = scanner.nextDouble();
+
+        DoubleWrapper a1 = new DoubleWrapper(a);
+        DoubleWrapper b1 = new DoubleWrapper(b);
+
+        System.out.println("Сумма: " + DoubleWrapper.add(a, b));
+        System.out.println("Умножение: " + DoubleWrapper.divide(a, b));
+        System.out.println("Возведение в степень: " + DoubleWrapper.pow(a, b));
+
+        scanner.close();
+    }
+}
+
+14. Разработать программу, в которой требуется создать класс, описывающий геометрическую фигуру – треугольник. Методами класса должны быть – вычисление площади, периметра. Создать класс-наследник, определяющий прямоугольный треугольник.
+package task14;
+
+public class RightTriangle extends Triangle {
+    public RightTriangle(double a, double b) {
+        super(a, b, Math.sqrt(a * a + b * b)); // находим гипотенузу по теореме Пифагора
+    }
+
+    public double getHypotenuse() {
+        return getSideC();
+    }
+}
+package task14;
+
+import task14.RightTriangle;
+
+public class Test {
+    public static void calculateTriangles() {
+        Triangle t = new Triangle(3, 4, 5);
+        System.out.println("Perimeter: " + t.getPerimeter()); // 12.0
+        System.out.println("Area: " + t.getArea()); // 6.0
+
+        RightTriangle rt = new RightTriangle(3, 4);
+        System.out.println("Perimeter: " + rt.getPerimeter()); // 12.0
+        System.out.println("Area: " + rt.getArea()); // 6.0
+        System.out.println("Hypotenuse: " + rt.getHypotenuse()); // 5.0
+    }
+
+    public static void main(String[] args) {
+        calculateTriangles();
+    }
+}
+package task14;
+
+public class Triangle {
+    private double sideA;
+    private double sideB;
+    private double sideC;
+
+    public Triangle(double a, double b, double c) {
+        sideA = a;
+        sideB = b;
+        sideC = c;
+    }
+
+    public double getSideA() {
+        return sideA;
+    }
+
+    public double getSideB() {
+        return sideB;
+    }
+
+    public double getSideC() {
+        return sideC;
+    }
+
+    public double getPerimeter() {
+        return sideA + sideB + sideC;
+    }
+
+    public double getArea() {
+        double p = getPerimeter() / 2;
+        return Math.sqrt(p * (p - sideA) * (p - sideB) * (p - sideC));
+    }
+}
+15. Разработать программу, в которой требуется создать абстрактный класс. В этом абстрактном классе определить абстрактные методы вычисления функции в определенной точке.  Создать классы-наследники абстрактного класса, описывающими уравнения прямой и параболы.  Программа должна выводить в консоль значение функции при вводе определенного значения.
+package task_15;
+
+public class Main {
+    public static void main(String[] args) {
+        linearFunction linear = new linearFunction();
+        quadraticFunction quadratic = new quadraticFunction();
+
+        linear.calculateFunction();
+        quadratic.calculateFunction();
+    }
+}
+package task_15;
+
+public abstract class functionConstructor {
+    public abstract void calculateFunction();
+}
+import java.util.Scanner;
+
+public class linearFunction extends functionConstructor {
+    @Override
+    public void calculateFunction() {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Работа с функцией вида y = k * x + b");
+
+        System.out.print("Введите значение переменной x ");
+        double x = scan.nextDouble();
+
+        System.out.print("Введите значение углового коэффициента k ");
+        double k = scan.nextDouble();
+
+        System.out.print("Введите значение свободного коэффициента b ");
+        double b = scan.nextDouble();
+
+        double y = x * k + b;
+
+        System.out.println("Значение функции с заданными параметрами в точке x равно " + y);
+    }
+}
+import java.util.Scanner;
+
+public class quadraticFunction extends functionConstructor {
+    @Override
+    public void calculateFunction() {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Работа с функцией вида y = a * x ^ 2 + b * x + c");
+
+        System.out.print("Введите значение переменной x ");
+        double x = scan.nextDouble();
+
+        System.out.print("Введите значение старшего коэффициента a ");
+        double a = scan.nextDouble();
+        while (a == 0) {
+            System.out.println("Старший коэффициент не может равняться 0");
+            System.out.print("Введите значение старшего коэффициента a ");
+            a = scan.nextDouble();
+        }
+
+        System.out.print("Введите значение второго коэффициента b ");
+        double b = scan.nextDouble();
+
+        System.out.print("Введите значение свободного коэффициента c ");
+        double c = scan.nextDouble();
+
+        scan.close();
+
+        double y = a * Math.pow(x, 2) + b * x + c;
+
+        System.out.print("Значение функции с заданными параметрами в точке x равно " + y);
+    }
+}
+16. Создать интерфейс Progress c методами вычисления любого элемента прогрессии и суммы прогрессии. Разработать классы арифметической и геометрической прогрессии, которые имплементируют интерфейс Progress. 
+public class ArithmeticProgression implements Progress {
+    private double a;
+    private double d;
+
+    public ArithmeticProgression(double a, double d) {
+        this.a = a;
+        this.d = d;
+    }
+
+    public double getElement(int n) {
+        return a + (n - 1) * d;
+    }
+
+    public double getSum(int n) {
+        return n * (2 * a + (n - 1) * d) / 2;
+    }
+}
+public class GeometricProgression implements Progress {
+    private double a;
+    private double r;
+
+    public GeometricProgression(double a, double r) {
+        this.a = a;
+        this.r = r;
+    }
+
+    public double getElement(int n) {
+        return a * Math.pow(r, n - 1);
+    }
+
+    public double getSum(int n) {
+        return a * (1 - Math.pow(r, n)) / (1 - r);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        // Создаем арифметическую прогрессию с a = 1, d = 2
+        ArithmeticProgression ap = new ArithmeticProgression(1, 2);
+
+        // Вычисляем и выводим на экран первые 5 элементов арифметической прогрессии
+        for (int i = 1; i <= 5; i++) {
+            double element = ap.getElement(i);
+            System.out.println("Элемент " + i + ": " + element);
+        }
+
+        // Вычисляем и выводим на экран сумму первых 5 элементов арифметической прогрессии
+        double sum = ap.getSum(5);
+
+        System.out.println("Сумма первых 5 элементов арифметической прогрессии: " + sum + "\n");
+
+        // Создаем геометрическую прогрессию с a = 2, r = 3
+        GeometricProgression gp = new GeometricProgression(2, 3);
+
+        // Вычисляем и выводим на экран первые 5 элементов геометрической прогрессии
+        for (int i = 1; i <= 5; i++) {
+            double element = gp.getElement(i);
+            System.out.println("Элемент " + i + ": " + element);
+        }
+
+        // Вычисляем и выводим на экран сумму первых 5 элементов геометрической прогрессии
+        sum = gp.getSum(5);
+        System.out.println("Сумма первых 5 элементов геометрической прогрессии : " + sum);
+    }
+}
+public interface Progress {
+    double getElement(int n);
+    double getSum(int n);
+}
+17. Разработать интерфейс InArray, в котором предусмотреть метод сложения двух  массивов. Создать класс ArraySum, в котором имплементируется метод сложения массивов.  Создать класс OrArray, в котором метод сложения массивов имплементируется как логическая  операция ИЛИ между элементами массива.  
+public class OrArray implements InArray {
+    @Override
+    public int[] sum(int[] arr1, int[] arr2) {
+        if (arr1.length != arr2.length) {
+            throw new IllegalArgumentException("Arrays must be of equal length");
+        }
+        int[] result = new int[arr1.length];
+        for (int i = 0; i < arr1.length; i++) {
+            result[i] = arr1[i] | arr2[i];
+        }
+        return result;
+    }
+}
+public interface InArray {
+    int[] sum(int[] arr1, int[] arr2);
+}
+public class ArraySum implements InArray {
+    @Override
+    public int[] sum(int[] arr1, int[] arr2) {
+        if (arr1.length != arr2.length) {
+            throw new IllegalArgumentException("Arrays must be of equal length");
+        }
+        int[] result = new int[arr1.length];
+        for (int i = 0; i < arr1.length; i++) {
+            result[i] = arr1[i] + arr2[i];
+        }
+        return result;
+    }
+}
+import java.util.Arrays;
+
+public class ArrayOperationRunner {
+    public static void main(String[] args) {
+        int[] arr1 = {1, 2, 3};
+        int[] arr2 = {4, 5, 6};
+
+        InArray arraySum = new ArraySum();
+        int[] sumResult = arraySum.sum(arr1, arr2);
+        System.out.println("Array Sum Result: " + Arrays.toString(sumResult));
+
+        InArray orArray = new OrArray();
+        int[] orResult = orArray.sum(arr1, arr2);
+        System.out.println("Or Array Result: " + Arrays.toString(orResult));
+    }
+}
+18. Создать класс Binary для работы с двоичными числами фиксированной длины. Число  должно быть массивом тип char, каждый элемент которого принимает значение 0 или 1.  Младший бит имеет младший индекс. Отрицательные числа представляются в дополнительном  коде. Дополнительный код получается инверсией всех битов с прибавлением 1 к младшему биту.  Например, +1 – это в двоичном коде будет выглядеть, как 0000 0001. А -1 в двоичном коде будет  выглядеть, как 1111 1110 + 0000 0001 = 1111 1111. Создать методы конвертации десятичного  числа в массив и обратно.
+public class task18 {
+    private char[] bits;
+public task18(char[] bits) {
+        this.bits = bits.clone();
+    }
+
+    public char[] getBits() {
+        return bits.clone();
+    }
+
+    public void setBits(char[] bits) {
+        this.bits = bits.clone();
+    }
+
+    public static task18 fromDecimal(int decimal, int length) {
+        if (decimal < 0) {
+            throw new IllegalArgumentException("Десятичное число не может быть отрицательным");
+        }
+
+        char[] bits = new char[length];
+        for (int i = length - 1; i >= 0; i--) {
+            bits[i] = (char) (decimal % 2 + '0');
+            decimal /= 2;
+        }
+
+        return new task18(bits);
+    }
+
+    public int toDecimal() {
+        int decimal = 0;
+        int power = bits.length - 1;
+
+        for (int i = 0; i < bits.length; i++) {
+            if (bits[i] == '1') {
+                decimal += Math.pow(2, power);
+            }
+            power--;
+        }
+
+        return decimal;
+    }
+
+    public static task18 fromString(String binaryString) {
+        char[] bits = binaryString.toCharArray();
+
+        // Проверяем, что каждый символ равен '0' или '1'
+        for (char bit : bits) {
+            if (bit != '0' && bit != '1') {
+                throw new IllegalArgumentException("Некорректная строка двоичного числа");
+            }
+        }
+
+        return new task18(bits);
+    }
+
+    public String toString() {
+        return new String(bits)
+      }
+}
+public class task18_main {
+    public static void main(String[] args) {
+        // Пример создания объекта Binary из десятичного числа
+        task18 binary1 = task18.fromDecimal(5, 8);
+        System.out.println("Binary1: " + binary1.toString()); // 00000101
+
+        // Пример преобразования Binary в десятичное число
+        int decimal1 = binary1.toDecimal();
+        System.out.println("Decimal1: " + decimal1); // 5
+
+        // Пример создания объекта Binary из строки
+        task18 binary2 = task18.fromString("101010");
+        System.out.println("Binary2: " + binary2.toString()); // 101010
+
+        // Пример преобразования Binary в десятичное число
+        int decimal2 = binary2.toDecimal();
+        System.out.println("Decimal2: " + decimal2); // 42
+    }
+}
+
+19. Создать класс Matrix для работы с двумерными матрицами. Создать методы для генерации нулевой матрицы, а также для генерации матрицы со случайными величинами – применить Math.random(). Реализовать метод сложения матриц. 
+
+  public class Matrix {
+        private int rows;
+        private int cols;
+        private double[][] data;
+
+        public Matrix(int rows, int cols) {
+            this.rows = rows;
+            this.cols = cols;
+            this.data = new double[rows][cols];
+        }
+
+        public Matrix(double[][] data) {
+            this.rows = data.length;
+            this.cols = data[0].length;
+            this.data = data;
+        }
+
+        public static Matrix zeros(int rows, int cols) {
+            return new Matrix(rows, cols);
+        }
+
+        public static Matrix random(int rows, int cols) {
+            Matrix matrix = new Matrix(rows, cols);
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    matrix.data[i][j] = Math.random();
+                }
+            }
+            return matrix;
+        }
+
+        public Matrix add(Matrix other) {
+            if (this.rows != other.rows || this.cols != other.cols) {
+                throw new IllegalArgumentException("Matrices must have the same dimensions");
+            }
+
+            Matrix result = new Matrix(rows, cols);
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    result.data[i][j] = this.data[i][j] + other.data[i][j];
+                }
+            }
+
+            return result;
+        }
+
+        public void print() {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    System.out.print(data[i][j] + " ");
+                }
+                System.out.println();
+            }
+        }
+
+        public static void main(String[] args) {
+            Matrix a = Matrix.random(3, 3);
+            Matrix b = Matrix.zeros(3, 3);
+            Matrix c = a.add(b);
+
+            System.out.println("Matrix a:");
+            a.print();
+            System.out.println("Matrix b:");
+            b.print();
+            System.out.println("Matrix c:");
+            c.print();
+
+
+        }
+    }
+20. Реализовать класс MyMath для работы с числами. Реализовать статический метод  класса MyMath.round(), который округляет дробь до целого числа. Также статический метод  abs(), который находит модуль числа. Статический метод MyMath.pow() для нахождения степени  числа. Библиотеку Math не использовать.  
+public class zadanie20 {
+    public static int round(double a)
+    {
+        int A = (int) a; // отбрасываем часть после запятой
+        double raznost = a - A;
+
+        if (raznost >= 0.5){
+            A = A + 1;
+        }
+        return A;
+    }
+    public static double abs(double a)
+    {
+        if(a < 0){
+            return -a;
+        }else{
+            return a;
+        }
+    }
+    public static long pow(int a, double stepen)
+    {
+        long result = 1;
+        if (stepen > 0){
+            for (int i = 0; i < stepen; i++){
+                result *= a;
+            }
+        } else {
+            for (int i = 0; i > stepen; i--)
+            {
+                result *= a;
+            }
+        }
+        return result;
+    }
+
+
+    public static void main(String[] args)
+    {
+        System.out.println(round(10000.49909089890));
+        System.out.println(abs(-100000));
+        System.out.println(pow(2, 21));
+
+
+    }
+}
+21. Разработать программу для игры «Угадайка». Программа загадывает случайное число  от 1 до 10, требуется его отгадать с трех попыток. После каждой попытки, если результат неверен,  игроку выводится сообщение, меньше или больше названное игроком число, чем загаданное. Сет  заканчивается или если игрок угадывает число, или если исчерпывает три попытки, не угадав.  Игра должна быть выполнена в бесконечном цикле, и продолжается до тех пор, пока на  предложение «Сыграем еще раз?» игрок не напишет «Нет».  
+import java.util.Random;
+import java.util.Scanner;
+
+
+public class task21 {
+        public static void main (String[]args){
+            Scanner scanner = new Scanner(System.in);
+            Random random = new Random();
+
+            while (true) {
+                int secretNumber = random.nextInt(10) + 1;
+                int attempts = 3;
+                boolean guessed = false;
+
+                while (attempts > 0) {
+                    System.out.print("Введите число: ");
+                    int guess;
+
+                    try {
+                        guess = scanner.nextInt();
+                    } catch (Exception e) {
+                        System.out.println("Некорректный ввод. Введите целое число от 1 до 10.");
+                        scanner.nextLine();
+                        continue;
+                    }
+
+                    if (guess == secretNumber) {
+                        System.out.println("Вы угадали число.");
+                        guessed = true;
+                        break;
+                    } else if (guess < secretNumber) {
+                        System.out.println("Загаданное число больше, чем введенное.");
+                    } else {
+                        System.out.println("Загаданное число меньше, чем введенное.");
+                    }
+
+                    attempts--;
+                }
+
+                if (!guessed) {
+                    System.out.println("Вы проиграли. Загаданное число было: " + secretNumber);
+                }
+
+                System.out.print("Хотите сыграть еще раз? (Да/Нет): ");
+                String playAgain = scanner.next();
+
+                if (!playAgain.equalsIgnoreCase("да")) {
+                    break;
+                }
+            }
+
+            System.out.println("Спасибо за игру. До свидания!");
+            scanner.close();
+        }
+
+
+}
+22. Разработайте программу-генератор рабочего календаря. Слесарь механосборочного  цеха работает сутки через трое. Если смена попадает на воскресенье, то переносится на  понедельник. По введенной дате программа должна генерировать расписание из дат на текущий  месяц на 2022 год.
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Zad22 {
+    public static void main(String[] args) {
+        LocalDate currentDate = LocalDate.now();
+        int year = 2022;
+        Month month = currentDate.getMonth();
+
+        // Получение списка рабочих дней в указанном месяце
+        List<LocalDate> workDays = getWorkDays(year, month);
+
+        // Вывод расписания
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        System.out.println("Рабочий календарь на " + month.toString() + " " + year + ":");
+
+        for (LocalDate workDay : workDays) {
+            System.out.println(workDay.format(formatter));
+        }
+    }
+
+    // Метод для получения списка рабочих дней в указанном месяце
+    private static List<LocalDate> getWorkDays(int year, Month month) {
+        List<LocalDate> workDays = new ArrayList<>();
+        LocalDate startDate = LocalDate.of(year, month, 1);
+        LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+
+        LocalDate currentDate = startDate;
+        while (!currentDate.isAfter(endDate)) {
+            if (currentDate.getDayOfWeek() != DayOfWeek.SUNDAY) {
+                workDays.add(currentDate);
+            }
+            currentDate = currentDate.plusDays(1);
+        }
+
+        // Перенос смены на понедельник, если она попадает на воскресенье
+        for (int i = 0; i < workDays.size(); i += 3) {
+            if (workDays.get(i).getDayOfWeek() == DayOfWeek.SUNDAY) {
+                workDays.remove(i);
+                workDays.add(i + 1, workDays.get(i).plusDays(1));
+            }
+        }
+
+        return workDays;
+    }
+}
+23. Разработать класс для представления комплексных чисел с возможностью задания  вещественной и мнимой частей в виде массива из двух чисел типа int. Определить методы для  выполнения операций сложения, вычитания и умножения комплексных чисел.  
+
+public class ComplexNumber {
+    private int[] parts; // ?????? ??? ???????? ???????????? ? ?????? ??????
+
+    public ComplexNumber(int realPart, int imaginaryPart) {
+        parts = new int[2];
+        parts[0] = realPart; // ???????????? ?????
+        parts[1] = imaginaryPart; // ?????? ?????
+    }
+
+    public ComplexNumber add(ComplexNumber other) {
+        int real = this.parts[0] + other.parts[0];
+        int imaginary = this.parts[1] + other.parts[1];
+        return new ComplexNumber(real, imaginary);
+    }
+
+    public ComplexNumber subtract(ComplexNumber other) {
+        int real = this.parts[0] - other.parts[0];
+        int imaginary = this.parts[1] - other.parts[1];
+        return new ComplexNumber(real, imaginary);
+    }
+
+    public ComplexNumber multiply(ComplexNumber other) {
+        int real = this.parts[0] * other.parts[0] - this.parts[1] * other.parts[1];
+        int imaginary = this.parts[0] * other.parts[1] + this.parts[1] * other.parts[0];
+        return new ComplexNumber(real, imaginary);
+    }
+
+    public int getRealPart() {
+        return parts[0];
+    }
+
+    public int getImaginaryPart() {
+        return parts[1];
+    }
+
+    public void setRealPart(int realPart) {
+        parts[0] = realPart;
+    }
+
+    public void setImaginaryPart(int imaginaryPart) {
+        parts[1] = imaginaryPart;
+    }
+
+    @Override
+    public String toString() {
+        return parts[0] + " + " + parts[1] + "i";
+    }
+}
+24. Создайте класс Form - оболочку для создания и ввода пароля. Он должен иметь методы  input, submit, password. Создайте класс SmartForm, который будет наследовать от Form и  сохранять значения password.  
+
+import java.util.Scanner;
+
+class Form {
+    private String password;
+
+    public void input() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("enter a password: ");
+        password = scanner.nextLine();
+    }
+
+    public void submit() {
+        System.out.println("form was submitted.");
+    }
+
+    public String getPassword() {
+        return password;
+    }
+}
+
+class SmartForm extends Form {
+    private String savedPassword;
+
+    @Override
+    public void input() {
+        super.input();
+        savedPassword = getPassword();
+    }
+
+    public void displaySavedPassword() {
+        System.out.println("saves password: " + savedPassword);
+    }
+}
+public class task24 {
+    public static void main(String[] args) {
+        SmartForm smartForm = new SmartForm();
+        smartForm.input();
+        smartForm.submit();
+        smartForm.displaySavedPassword();
+    }
+}
+25. Сделайте класс User, в котором будут следующие protected поля - name (имя), age  (возраст), public методы setName, getName, setAge, getAge. Сделайте класс Worker, который  наследует от класса User и вносит дополнительное private поле salary (зарплата), а также методы  public getSalary и setSalary. Создайте объект этого класса 'Иван', возраст 25, зарплата 1000.  Создайте второй объект этого класса 'Вася', возраст 26, зарплата 2000. Найдите сумму зарплата  Ивана и Васи. Сделайте класс Student, который наследует от класса User и вносит  дополнительные private поля стипендия, курс, а также геттеры и сеттеры для них.
+public class Main {
+    public static void main(String[] args) {
+        Worker ivan = new Worker();
+        ivan.setName("Иван");
+        ivan.setAge(25);
+        ivan.setSalary(1000);
+
+        Worker vasya = new Worker();
+        vasya.setName("Вася");
+        vasya.setAge(26);
+        vasya.setSalary(2000);
+
+        double totalSalary = ivan.getSalary() + vasya.getSalary();
+        System.out.println("Сумма зарплат Ивана и Васи: " + totalSalary);
+    }
+}
+class Student extends User {
+    private double scholarship;
+    private int course;
+
+    public void setScholarship(double scholarship) {
+        this.scholarship = scholarship;
+    }
+
+    public double getScholarship() {
+        return scholarship;
+    }
+
+    public void setCourse(int course) {
+        this.course = course;
+    }
+
+    public int getCourse() {
+        return course;
+    }
+}
+class User {
+    protected String name;
+    protected int age;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getAge() {
+        return age;
+    }
+}
+class Worker extends User {
+    private double salary;
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+}
+26. Создайте класс ColorModel для определения цветовой модели. Разработайте  подклассы RGBconverter и CMYKconverter для конвертации цвета из одной модели в другую.  Конвертация CMYK в RGB производится по следующим формулам: R = 255 ? (1-C) ? (1-K), G =  255 ? (1-M) ? (1-K), B = 255 ? (1-Y) ? (1-K) (где R – red, G – green, B – black, C – Cyan, M - Magenta,  Y - Yellow, K- Black)) 
+
+Ссылка: https://github.com/mestashh/z26
+27. Создайте класс Number для конвертации десятичного числа в бинарный,  восьмеричный, шестнадцатеричный вид. Реализовать в виде статических методов класса. Числа  вводятся с клавиатуры с запросом в какой численный вид конвертировать
+import java.util.Scanner;
+
+public class Number {
+
+    // метод для конвертации в бинарный формат
+    public static String toBinary(int decimal) {
+        return Integer.toBinaryString(decimal);
+    }
+
+    // метод для конвертации в восьмеричный формат
+    public static String toOctal(int decimal) {
+        return Integer.toOctalString(decimal);
+    }
+
+    // метод для конвертации в шестнадцатеричный формат
+    public static String toHexadecimal(int decimal) {
+        return Integer.toHexString(decimal);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите десятичное число: ");
+        int decimal = scanner.nextInt();
+
+        System.out.print("Введите в какой системе счисления вывести число (2 - бинарная, 8 - восьмеричная, 16 - шестнадцатеричная): ");
+        int base = scanner.nextInt();
+
+        if (base == 2) {
+            System.out.println("Бинарное представление: " + toBinary(decimal));
+
+        } else if(base == 8) {
+            System.out.println("Восьмеричное представление: " + toOctal(decimal));
+
+        } else if(base == 16) {
+            System.out.println("Шестнадцатеричное представление: " + toHexadecimal(decimal));
+
+        } else {
+            System.out.println("Неизвестная система счисления.");
+        }
+
+        scanner.close();
+    }
+}
+
+29. Напишите программу, которая заполняет списочный массив случайными числами  типа Integer (значения этих чисел были от 1 до 100). Список должен содержать 100 элементов.  Затем отсортируйте по убыванию список и выведите первые 10 значений в консоль.
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+public class Zadacha29 {
+    public static void main(String[] args) {
+        Random rand = new Random();
+        List<Integer> list = new ArrayList<>();
+
+        // заполнение списка случайными числами от 1 до 100
+        for (int i = 0; i < 100; i++) {
+            list.add(rand.nextInt(100) + 1);
+        }
+
+        System.out.println("До сортировки: ");
+        for (int i = 0; i < 10; i++) {
+            // System.out.print чтобы числа были на одной строчке
+            System.out.print(list.get(i) + " ");
+        }
+
+        // сортировка списка по убыванию
+        Collections.sort(list, Collections.reverseOrder());
+
+        System.out.println("\nПосле сортировки: ");
+        // вывод первых 10 значений списка
+        for (int i = 0; i < 10; i++) {
+            System.out.print(list.get(i) + " ");
+        }
+    }
+}
+30. Разработайте программу, которая заполняет список случайными числами. Количество  элементов и числовой диапазон вводятся пользователем. Программа должна проверять, входит  ли число (также вводится пользователем) в данный список. Поиск провести организовать, как  бинарный.
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+
+
+public class BinarySearch {
+    public static void main(String[] args) {
+
+        List<Integer> numbers = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Введите длину списка: ");
+        int n = sc.nextInt();
+        System.out.print("Ввдите начало диапазона: ");
+        int min = sc.nextInt();
+        System.out.print("Введите конец диапазона: ");
+        int max = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            int num = (int) (Math.random() * (max - min + 1) + min);
+            numbers.add(num);
+        }
+        Collections.sort(numbers);
+        System.out.print("Введите искомое число: ");
+        int index = binarySearch(numbers, sc.nextInt());
+        if (index == -1)
+            System.out.println("Заданное число не входит в список");
+        else
+            System.out.println("Индекс заданного числа в списке: " + index);
+        System.out.println(numbers);
+    }
+
+    public static int binarySearch(List<Integer> numbers, int target) {
+        int left = 0, right = numbers.size() - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (numbers.get(mid) == target) {
+                return mid;
+            } else if (numbers.get(mid) < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+
+
+}
+31. На основе класса BitSet разработайте программу для реализации битовых операций  AND, OR, XOR, а также маскирования.
+import java.util.BitSet;
+import java.util.Scanner;
+
+public class BitWiseOperations {
+        public static void main(String[] args) {
+        BitSet bitSet1 = new BitSet(8);
+        BitSet bitSet2 = new BitSet(8);
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Введите диапазон битов: ");
+        int start1 = sc.nextInt(), end1 = sc.nextInt();
+        bitSet1.set(start1, end1);
+        System.out.print("Введите диапазон битов: ");
+        int start2 = sc.nextInt(), end2 = sc.nextInt();
+        bitSet2.set(start2, end2);
+
+
+
+
+        BitSet resultAnd = new BitSet();
+        resultAnd = (BitSet) bitSet1.clone();
+        resultAnd.and(bitSet2); // данная операция оставляет только одинаковые биты
+        System.out.println("Операция AND: " + resultAnd);
+
+        BitSet resultOr = new BitSet();
+        resultOr = (BitSet) bitSet1.clone();
+        resultOr.or(bitSet2);  // операция добавляет биты из bitSet2, если их нет в resultOr
+        System.out.println("Операция OR: " + resultOr);
+
+
+        BitSet resultXor = new BitSet();
+        resultXor = (BitSet) bitSet1.clone();
+        resultXor.xor(bitSet2);  // эта операция устанавливает неповторящиеся биты
+        System.out.println("Операция XOR: " + resultXor);
+
+
+        //Маскирование
+        BitSet mask = new BitSet(8);
+        System.out.println("Введите диапазон для маски: ");
+        int a = sc.nextInt(), b = sc.nextInt();
+        mask.set(a, b);
+
+        BitSet resultMask = new BitSet();
+        resultMask = (BitSet) bitSet1.clone();
+        resultMask.and(mask);
+        System.out.println("Маскирование: " + resultMask); // будет содержать только те биты, которые установлены в битовой маске mask.
+    }
+}
+32. Напишите программу, которая получает в качестве входных данных два числа. Эти числа являются количество строк и столбцов двумерной коллекции целых чисел. Далее элементы заполняются случайными числами и выводятся в консоль в виде таблицы.  
+import java.util.Scanner;
+import java.util.Random;
+
+public class Main{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите количество строк: ");
+        int rows = scanner.nextInt();
+
+        System.out.print("Введите количество столбцов: ");
+        int columns = scanner.nextInt();
+
+        int[][] arr = new int[rows][columns];
+        Random random = new Random();
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                arr[i][j] = random.nextInt(10);
+            }
+        }
+
+        System.out.println("Двумерный массив:");
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+33. Разработайте программу, которая получает в качестве параметра два числа – количество строк и столбцов двумерной коллекции целых чисел. Коллекция заполняется случайными числами, после чего на экран выводятся максимальное и минимальное значения с  индексами ячеек.  
+import java.util.Random;
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите количество строк: ");
+        int rows = scanner.nextInt();
+        System.out.print("Введите количество столбцов: ");
+        int columns = scanner.nextInt();
+
+        int[][] collection = new int[rows][columns];
+        Random random = new Random();
+
+        // заполнение коллекции случайными числами
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                collection[i][j] = random.nextInt();
+            }
+        }
+
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        int maxRow = 0;
+        int maxColumn = 0;
+        int minRow = 0;
+        int minColumn = 0;
+
+        // поиск максимального и минимального значения с индексами ячеек
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (collection[i][j] > max) {
+                    max = collection[i][j];
+                    maxRow = i;
+                    maxColumn = j;
+                }
+                if (collection[i][j] < min) {
+                    min = collection[i][j];
+                    minRow = i;
+                    minColumn = j;
+                }
+            }
+        }
+
+        System.out.println("Максимальное значение: " + max + ", индексы ячейки: [" + maxRow + "][" + maxColumn + "]");
+        System.out.println("Минимальное значение: " + min + ", индексы ячейки: [" + minRow + "][" + minColumn + "]");
+    }
+}
+34. Разработайте программу, в которой создайте две коллекции с именами людей  (строковые переменные). Затем последовательно выводите в консоль имена. 
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> names1 = new ArrayList<>();
+        names1.add("Катя");
+        names1.add("Маша");
+        names1.add("Арина");
+
+        List<String> names2 = new ArrayList<>();
+        names2.add("Бэтмен");
+        names2.add("Робин");
+        names2.add("Альфред");
+
+        System.out.println("Имена 1:");
+        for (String name : names1) {
+            System.out.println(name);
+        }
+
+        System.out.println("Имена 2:");
+        for (String name : names2) {
+            System.out.println(name);
+        }
+    }
+}
+35. Напишите программу, которая реализует класс Matrix и следующие методы:  a. Сложение и вычитание матриц.  
+b. Умножение матрицы на число.  
+c. Произведение двух матриц.  
+d. Транспонированная матрица.  
+e. Возведение матрицы в степень.  
+      f. Если метод, возвращает матрицу, то он должен возвращать новый объект, а не менять  базовый. 
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Matrix35 {
+    private final int sizeX;
+    private final int sizeY;
+    private final double[][] matrix;
+
+    public Matrix35(int sizeX, int sizeY) {
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+        this.matrix = new double[sizeX][sizeY];
+    }
+
+    public void display() {
+        System.out.println(Arrays.deepToString(this.matrix));
+    }
+
+    public void inputMatrix() {
+        Scanner sc = new Scanner(System.in);
+        for (int i = 0; i < this.sizeX; i++) {
+            for (int j = 0; j < this.sizeY; j++) {
+                System.out.println("Введите элемент матрицы распологающийся по координатам " + i + " " + j);
+                this.matrix[i][j] = sc.nextDouble();
+            }
+        }
+    }
+
+    public Matrix35 add(Matrix35 other) {
+        if (this.sizeX != other.sizeX || this.sizeY != other.sizeY) {
+            throw new IllegalArgumentException("Матрицы должны быть одного размера для сложения!");
+        }
+
+        Matrix35 result = new Matrix35(this.sizeX, this.sizeY);
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
+                result.matrix[i][j] = this.matrix[i][j] + other.matrix[i][j];
+            }
+        }
+        return result;
+    }
+
+    public Matrix35 subtract(Matrix35 other) {
+        if (this.sizeX != other.sizeX || this.sizeY != other.sizeY) {
+            throw new IllegalArgumentException("Матрицы должны быть одного размера для вычитания!");
+        }
+
+        Matrix35 result = new Matrix35(this.sizeX, this.sizeY);
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
+                result.matrix[i][j] = this.matrix[i][j] - other.matrix[i][j];
+            }
+        }
+        return result;
+    }
+
+    public Matrix35 multiplyByScalar(double scalar) {
+        Matrix35 result = new Matrix35(this.sizeX, this.sizeY);
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
+                result.matrix[i][j] = this.matrix[i][j] * scalar;
+            }
+        }
+        return result;
+    }
+
+    public Matrix35 multiply(Matrix35 other) {
+        if (this.sizeY != other.sizeX) {
+            throw new IllegalArgumentException("Количество столбцов первой матрицы должно быть равно количеству строк второй матрицы для умножения!");
+        }
+
+        Matrix35 result = new Matrix35(this.sizeX, other.sizeY);
+        for (int i = 0; i < this.sizeX; i++) {
+            for (int j = 0; j < other.sizeY; j++) {
+                for (int k = 0; k < this.sizeY; k++) {
+                    result.matrix[i][j] += this.matrix[i][k] * other.matrix[k][j];
+                }
+            }
+        }
+        return result;
+    }
+
+    public Matrix35 transpose() {
+        Matrix35 result = new Matrix35(this.sizeY, this.sizeX);
+        for (int i = 0; i < this.sizeX; i++) {
+            for (int j = 0; j < this.sizeY; j++) {
+                result.matrix[j][i] = this.matrix[i][j];
+            }
+        }
+        return result;
+    }
+
+    public Matrix35 power(int exponent) {
+        if (this.sizeX != this.sizeY) {
+            throw new IllegalArgumentException("Матрица должна быть квадратной для возведения в степень!");
+        }
+
+        Matrix35 result = new Matrix35(this.sizeX, this.sizeY);
+        for (int i = 0; i < this.sizeX; i++) {
+            result.matrix[i][i] = 1;
+        }
+
+        for (int n = 0; n < exponent; n++) {
+            result = result.multiply(this);
+        }
+
+        return result;
+    }
+
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Введите размерность матрицы по оси координат: ");
+        int sizeX1 = sc.nextInt();
+        System.out.println("Введите размерность матрицы по оси ординат: ");
+        int sizeY1 = sc.nextInt();
+
+        Matrix35 matrix1 = new Matrix35(sizeX1, sizeY1);
+        System.out.println("Введите элементы первой матрицы: ");
+        matrix1.inputMatrix();
+
+        System.out.println("Первая матрица: ");
+        matrix1.display();
+
+        System.out.println("Введите размерность матрицы по оси координат: ");
+        int sizeX2 = sc.nextInt();
+        System.out.println("Введите размерность матрицы по оси ординат: ");
+        int sizeY2 = sc.nextInt();
+
+        Matrix35 matrix2 = new Matrix35(sizeX2, sizeY2);
+        System.out.println("Введите элементы второй матрицы: ");
+        matrix2.inputMatrix();
+
+        System.out.println("Вторая матрица: ");
+        matrix2.display();
+
+        try {
+            Matrix35 sum = matrix1.add(matrix2);
+            System.out.println("Результат сложения двух матриц: ");
+            sum.display();
+        } catch (IllegalArgumentException e) {
+            System.out.println("Матрицы разного размера, невозможно выполнить сложение!");
+        }
+
+        try {
+            Matrix35 difference = matrix1.subtract(matrix2);
+            System.out.println("Результат вычитания двух матриц: ");
+            difference.display();
+        } catch (IllegalArgumentException e) {
+            System.out.println("Матрицы разного размера, невозможно выполнить вычитание!");
+        }
+
+        try {
+            Matrix35 product = matrix1.multiply(matrix2);
+            System.out.println("Результат умножения двух матриц: ");
+            product.display();
+        } catch (IllegalArgumentException e) {
+            System.out.println("Количество столбцов первой матрицы не равно количеству строк второй матрицы, невозможно выполнить умножение!");
+        }
+
+        System.out.println("Транспонированная первая матрица: ");
+        Matrix35 transposedMatrix1 = matrix1.transpose();
+        transposedMatrix1.display();
+
+        System.out.println("Первая матрица, умноженная на 3: ");
+        Matrix35 scaledMatrix1 = matrix1.multiplyByScalar(3);
+        scaledMatrix1.display();
+
+        if (sizeX1 == sizeY1) {
+            System.out.println("Введите степень, в которую хотите возвести первую матрицу: ");
+            int exponent = sc.nextInt();
+            try {
+                Matrix35 poweredMatrix1 = matrix1.power(exponent);
+                System.out.println("Первая матрица, возведенная в степень " + exponent + ": ");
+                poweredMatrix1.display();
+            } catch (IllegalArgumentException e) {
+                System.out.println("Матрица не является квадратной, невозможно возвести ее в степень!");
+            }
+        }
+    }
+}
+36. Разработать программу для поочередной обработки текстовых файлов. Файлы созданы  со следующими именами: n.txt, где n – натуральное число. В файлах записаны: в первой строке  одно число с плавающей запятой, во второй строке – второе число. Пользователь вводит название  файла и требуемую операцию над числами (сложение, умножение, разность). Результат  выводится на экран и файл n_out.txt.
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Scanner;
+
+public class task36 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите номер файла: ");
+        String fileName = scanner.nextLine();
+
+        System.out.print("Введите операцию (+, *, -): ");
+        String operation = scanner.nextLine();
+
+        Path filePath = Paths.get(fileName + ".txt");
+
+        try {
+            double result = processFile(filePath, operation);
+            System.out.println("Результат: " + result);
+
+            File outFile = new File(fileName + "_out.txt");
+            FileWriter writer = new FileWriter(outFile);
+            writer.write(Double.toString(result));
+            writer.close();
+
+            System.out.printf("Результат сохранен в файле: %s%n", outFile.getName());
+
+        } catch (IOException e) {
+            System.err.println("Ошибка при обработке файла: " + e.getMessage());
+        }
+    }
+
+    private static double processFile(Path filePath, String operation) throws IOException {
+        double a;
+        double b;
+
+        try (Scanner scanner = new Scanner(filePath)) {
+            a = scanner.nextDouble();
+            b = scanner.nextDouble();
+        }
+
+        switch (operation) {
+            case "+":
+                return a + b;
+            case "*":
+                return a * b;
+            case "-":
+                return a - b;
+            default:
+                throw new IllegalArgumentException("Некорректная операция: " + operation);
+        }
+    }
+}
+
+37. Написать приложение для сложения, вычитания, умножения, деления, возведения в  степень логарифмов. Программа должна выполнять ввод данных, проверку правильности  введенных данных, выдачу сообщений в случае ошибок. Результат выводится на экран и  записывается в файл.
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+public class Zad37 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Выберите операцию:");
+        System.out.println("1. Сложение");
+        System.out.println("2. Вычитание");
+        System.out.println("3. Умножение");
+        System.out.println("4. Деление");
+        System.out.println("5. Возведение в степень");
+        System.out.println("6. Логарифм");
+
+        int choice = scanner.nextInt();
+        double result = 0.0;
+
+        switch (choice) {
+            case 1:
+                result = performAddition(scanner);
+                break;
+            case 2:
+                result = performSubtraction(scanner);
+                break;
+            case 3:
+                result = performMultiplication(scanner);
+                break;
+            case 4:
+                result = performDivision(scanner);
+                break;
+            case 5:
+                result = performPower(scanner);
+                break;
+            case 6:
+                result = performLogarithm(scanner);
+                break;
+            default:
+                System.out.println("Ошибка: Неправильный выбор операции.");
+                return;
+        }
+
+        System.out.println("Результат: " + result);
+
+        // Запись результата в файл
+        try {
+            FileWriter fileWriter = new FileWriter("result.txt");
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+            printWriter.println("Результат: " + result);
+            printWriter.close();
+            System.out.println("Результат записан в файл result.txt");
+        } catch (IOException e) {
+            System.out.println("Ошибка при записи в файл.");
+            e.printStackTrace();
+        }
+    }
+
+    // Метод для выполнения операции сложения
+    private static double performAddition(Scanner scanner) {
+        System.out.print("Введите первое число: ");
+        double num1 = scanner.nextDouble();
+        System.out.print("Введите второе число: ");
+        double num2 = scanner.nextDouble();
+        return num1 + num2;
+    }
+
+    // Метод для выполнения операции вычитания
+    private static double performSubtraction(Scanner scanner) {
+        System.out.print("Введите первое число: ");
+        double num1 = scanner.nextDouble();
+        System.out.print("Введите второе число: ");
+        double num2 = scanner.nextDouble();
+        return num1 - num2;
+    }
+
+    // Метод для выполнения операции умножения
+    private static double performMultiplication(Scanner scanner) {
+        System.out.print("Введите первое число: ");
+        double num1 = scanner.nextDouble();
+        System.out.print("Введите второе число: ");
+        double num2 = scanner.nextDouble();
+        return num1 * num2;
+    }
+
+    // Метод для выполнения операции деления
+    private static double performDivision(Scanner scanner) {
+        System.out.print("Введите делимое: ");
+        double dividend = scanner.nextDouble();
+        System.out.print("Введите делитель: ");
+        double divisor = scanner.nextDouble();
+
+        if (divisor == 0) {
+            System.out.println("Ошибка: Деление на ноль.");
+            return 0.0;
+        }
+
+        return dividend / divisor;
+    }
+
+    // Метод для выполнения операции возведения в степень
+    private static double performPower(Scanner scanner) {
+        System.out.print("Введите число: ");
+        double base = scanner.nextDouble();
+        System.out.print("Введите степень: ");
+        double exponent = scanner.nextDouble();
+        return Math.pow(base, exponent);
+    }
+
+    // Метод для выполнения операции логарифма
+    private static double performLogarithm(Scanner scanner) {
+        System.out.print("Введите число: ");
+        double number = scanner.nextDouble();
+
+        if (number <= 0) {
+            System.out.println("Ошибка: Логарифм от неположительного числа или нуля.");
+            return 0.0;
+        }
+
+        return Math.log(number);
+    }
+}
+38. Разработать программу шифровки-дешифровки по алгоритму AES-128. Данные  берутся из файла, зашифрованные данные сохраняются в указанный файл.
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.security.MessageDigest;
+import java.util.Arrays;
+
+public class Zad38 {
+    private static final String ALGORITHM = "AES";
+    private static final String TRANSFORMATION = "AES";
+    private static final String SECRET_KEY = "mysecretkey"; // Секретный ключ (16 символов для AES-128)
+
+    public static void main(String[] args) {
+        String inputFile = "input.txt"; // Входной файл
+        String encryptedFile = "encrypted.txt"; // Файл для сохранения зашифрованных данных
+
+        try {
+            byte[] key = generateKey(SECRET_KEY); // Генерация ключа из секретного ключа
+
+            // Шифрование файла
+            encrypt(inputFile, encryptedFile, key);
+            System.out.println("Шифрование завершено.");
+
+            // Дешифрование файла
+            String decryptedFile = "decrypted.txt"; // Файл для сохранения расшифрованных данных
+            decrypt(encryptedFile, decryptedFile, key);
+            System.out.println("Дешифрование завершено.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Генерация ключа из секретного ключа
+    private static byte[] generateKey(String secretKey) throws Exception {
+        MessageDigest sha = MessageDigest.getInstance("SHA-1");
+        byte[] key = sha.digest(secretKey.getBytes("UTF-8"));
+        return Arrays.copyOf(key, 16); // Возвращаем 16-байтовый ключ для AES-128
+    }
+
+    // Шифрование файла с использованием AES
+    private static void encrypt(String inputFile, String encryptedFile, byte[] key) throws Exception {
+        doCrypto(Cipher.ENCRYPT_MODE, inputFile, encryptedFile, key);
+    }
+
+    // Дешифрование файла с использованием AES
+    private static void decrypt(String inputFile, String decryptedFile, byte[] key) throws Exception {
+        doCrypto(Cipher.DECRYPT_MODE, inputFile, decryptedFile, key);
+    }
+
+    // Общий метод для шифрования/дешифрования данных
+    private static void doCrypto(int cipherMode, String inputFile, String outputFile, byte[] key) throws Exception {
+        try (FileInputStream inputStream = new FileInputStream(inputFile);
+             FileOutputStream outputStream = new FileOutputStream(outputFile)) {
+
+            SecretKeySpec secretKey = new SecretKeySpec(key, ALGORITHM);
+            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+            cipher.init(cipherMode, secretKey);
+
+            byte[] inputBytes = new byte[(int) new File(inputFile).length()];
+            inputStream.read(inputBytes);
+
+            byte[] outputBytes = cipher.doFinal(inputBytes);
+
+            outputStream.write(outputBytes);
+        }
+    }
+}
+39. Разработать программу нахождения наибольшего общего делителя двух натуральных  чисел. Требуется реализовать рекурсивный и без рекурсии варианты. 
+import java.util.Scanner;
+public class GCDBasic {
+    public static int findGCD(int num1, int num2) {
+        while (num2 != 0) {
+            int temp = num2;
+            num2 = num1 % num2;
+            num1 = temp;
+        }
+        return num1;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите первое число: ");
+        int number1 = scanner.nextInt();
+
+        System.out.print("Введите второе число: ");
+        int number2 = scanner.nextInt();
+
+        int gcd = findGCD(number1, number2);
+        System.out.println("НОД чисел " + number1 + " и " + number2 + " равен: " + gcd);
+
+        scanner.close();
+    }
+}
+import java.util.Scanner;
+
+public class task39_rec {
+    public static int findGCD(int num1, int num2) {
+        if (num2 == 0) {
+            return num1;
+        } else {
+            return findGCD(num2, num1 % num2);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите первое число: ");
+        int number1 = scanner.nextInt();
+
+        System.out.print("Введите второе число: ");
+        int number2 = scanner.nextInt();
+
+        int gcd = findGCD(number1, number2);
+        System.out.println("НОД чисел " + number1 + " и " + number2 + " равен: " + gcd);
+
+        scanner.close();
+    }
+}
+40. Напишите программу, которая каждые 5 секунд отображает на экране данные о  времени, прошедшем от начала запуска программы, а другой её поток выводит сообщение каждые 7 секунд. Третий поток выводит на экран сообщение каждые 10 секунд. Программа  работает одну минуту, затем останавливается. 
+public class task40 {
+    public static void main(String[] args) {
+        Thread timerThread = new Thread(new TimerTask());
+        Thread messageThread1 = new Thread(new MessageTask("Сообщение каждые 7 секунд"));
+        Thread messageThread2 = new Thread(new MessageTask("Сообщение каждые 10 секунд"));
+
+        timerThread.start();
+        messageThread1.start();
+        messageThread2.start();
+
+        try {
+            Thread.sleep(60000); // Программа работает одну минуту
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        timerThread.interrupt();
+        messageThread1.interrupt();
+        messageThread2.interrupt();
+    }
+
+    static class TimerTask implements Runnable {
+        @Override
+        public void run() {
+            long startTime = System.currentTimeMillis();
+            while (!Thread.currentThread().isInterrupted()) {
+                long elapsedTime = System.currentTimeMillis() - startTime;
+                System.out.println("Прошло времени: " + elapsedTime / 1000 + " секунд");
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }
+    }
+
+    static class MessageTask implements Runnable {
+        private String message;
+
+        public MessageTask(String message) {
+            this.message = message;
+        }
+
+        @Override
+        public void run() {
+            while (!Thread.currentThread().isInterrupted()) {
+                System.out.println(message);
+                try {
+                    Thread.sleep(7000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }
+    }
+}
+
+
+
+
